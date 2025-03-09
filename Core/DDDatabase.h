@@ -1,16 +1,18 @@
 #pragma once
 
 #include "../Services/Logging/DDLogger.h"
+#include "../Services/Networking/Server/DDServer.h"
 
 class DDDatabase
 {
 	// Members
 private:
+	DDServer& server;
 	DDLogger& logger;
 
 	// Constructors
 public:
-	DDDatabase(DDLogger& logger);
+	DDDatabase(DDLogger& logger, DDServer& server);
 	~DDDatabase();
 
 	// Private Functions
@@ -20,7 +22,5 @@ private:
 public:
 	bool Init();
 	void Run();
-
-
 };
 

@@ -21,13 +21,15 @@
   <ItemGroup>
     <ClInclude Include="DataTypes\String\DDString.h" />
     <ClInclude Include="Core\DDDatabase.h" />
-    <ClInclude Include="Services\Networking\DDServer.h" />
+    <ClInclude Include="Services\Networking\Sockets\ServerSocket\ServerSocket.h" />
+    <ClInclude Include="Services\Networking\Server\DDServer.h" />
     <ClInclude Include="Services\Logging\DDLogger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DataTypes\String\DDString.cpp" />
     <ClCompile Include="Core\DDDatabase.cpp" />
-    <ClCompile Include="Services\Networking\DDServer.cpp" />
+    <ClCompile Include="Services\Networking\Sockets\ServerSocket\ServerSocket.cpp" />
+    <ClCompile Include="Services\Networking\Server\DDServer.cpp" />
     <ClCompile Include="Services\Logging\DDLogger.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

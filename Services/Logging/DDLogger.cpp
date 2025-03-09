@@ -3,6 +3,7 @@
 DDLogger::DDLogger()
 {
 	infoPrefix = "[INFO] ";
+	errorPrefix = "[ERROR] ";
 }
 
 void DDLogger::LogInfo(DDString message)
@@ -12,4 +13,13 @@ void DDLogger::LogInfo(DDString message)
 void DDLogger::LogInfo(const char* message)
 {
 	std::cout << infoPrefix << message << std::endl;
+}
+
+void DDLogger::LogError(DDString message)
+{
+	std::cout << errorPrefix << message << std::endl;
+}
+void DDLogger::LogError(const char* message)
+{
+	std::cout << errorPrefix << message << std::endl;
 }

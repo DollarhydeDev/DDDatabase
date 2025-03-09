@@ -6,11 +6,15 @@ class DDLogger
 {
 private:
 	DDString infoPrefix;
+	DDString errorPrefix;
 
 public:
 	DDLogger();
 
 	void LogInfo(DDString message);
 	void LogInfo(const char* message);
+
+	void LogError(DDString message);
+	void LogError(const char* message);
 };
 

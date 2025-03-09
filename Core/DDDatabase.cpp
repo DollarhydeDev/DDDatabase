@@ -1,8 +1,7 @@
 #include "DDDatabase.h"
 
-DDDatabase::DDDatabase(DDLogger& logger)
+DDDatabase::DDDatabase(DDLogger& logger, DDServer& server) : logger(logger), server(server)
 {
-	this->logger = logger;
 }
 
 DDDatabase::~DDDatabase()
@@ -14,7 +13,14 @@ DDDatabase::~DDDatabase()
 bool DDDatabase::Init()
 {
 	logger.LogInfo("Database initializing...");
+	if (!server.Init())
+	{
+		logger.LogError("Database failed to initialize");
+		return false;
+	}
+
 	logger.LogInfo("Database initialized");
+	return true;
 }
 
 void DDDatabase::Run()

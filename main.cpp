@@ -1,12 +1,17 @@
 #include "Core/DDDatabase.h"
 #include "Services/Logging/DDLogger.h"
+#include "Services/Networking/Server/DDServer.h"
 
 int main()
 {
-	DDLogger logger = {};
-	DDDatabase DatabaseInstance(logger);
-	if (DatabaseInstance.Init())
+	// Setup dependencies
+	DDLogger logger{};
+	DDServer server{ logger };
+
+	// Launch new DB instance with dependencies
+	DDDatabase DatabaseInstance(logger, server);
 	{
+		if (!DatabaseInstance.Init()) return 1;
 		DatabaseInstance.Run();
 	}
 
