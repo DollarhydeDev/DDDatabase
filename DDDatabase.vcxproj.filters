@@ -4,11 +4,13 @@
     <ClInclude Include="DataTypes\String\DDString.h" />
     <ClInclude Include="Core\DDDatabase.h" />
     <ClInclude Include="Services\Logging\DDLogger.h" />
+    <ClInclude Include="Services\Networking\DDServer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DataTypes\String\DDString.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Core\DDDatabase.cpp" />
     <ClCompile Include="Services\Logging\DDLogger.cpp" />
+    <ClCompile Include="Services\Networking\DDServer.cpp" />
   </ItemGroup>
 </Project>

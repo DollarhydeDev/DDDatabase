@@ -1,8 +1,10 @@
 #include "Core/DDDatabase.h"
+#include "Services/Logging/DDLogger.h"
 
 int main()
 {
-	DDDatabase DatabaseInstance;
+	DDLogger logger = {};
+	DDDatabase DatabaseInstance(logger);
 	if (DatabaseInstance.Init())
 	{
 		DatabaseInstance.Run();

@@ -5,7 +5,7 @@
 class DDLogger
 {
 private:
-
+	DDString infoPrefix;
 
 public:
 	DDLogger();

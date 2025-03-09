@@ -1,24 +1,20 @@
 #include "DDDatabase.h"
 
-DDDatabase::DDDatabase()
+DDDatabase::DDDatabase(DDLogger& logger)
 {
-	wsaData = {};
-	logger = {};
+	this->logger = logger;
 }
 
 DDDatabase::~DDDatabase()
 {
 	logger.LogInfo("Database cleaning up...");
-	WSACleanup();
 	logger.LogInfo("Cleanup finished");
 }
 
 bool DDDatabase::Init()
 {
 	logger.LogInfo("Database initializing...");
-
-	int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	return result == 0 ? true : false;
+	logger.LogInfo("Database initialized");
 }
 
 void DDDatabase::Run()

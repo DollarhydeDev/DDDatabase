@@ -1,23 +1,16 @@
 #pragma once
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <stdio.h>
-
 #include "../Services/Logging/DDLogger.h"
-
-#pragma comment(lib, "Ws2_32.lib")
 
 class DDDatabase
 {
 	// Members
 private:
-	WSADATA wsaData;
-	DDLogger logger;
+	DDLogger& logger;
 
 	// Constructors
 public:
-	DDDatabase();
+	DDDatabase(DDLogger& logger);
 	~DDDatabase();
 
 	// Private Functions
