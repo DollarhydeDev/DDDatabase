@@ -5,9 +5,9 @@
 class DDString
 {
 private:
-	char* buffer;
-	int bufferSize;
-	int bufferCapacity;
+	char* _buffer;
+	int _bufferSize;
+	int _bufferCapacity;
 
 public:
 	// Default constructor
@@ -33,31 +33,31 @@ private:
 	void IncreaseBufferSize(int increaseAmount);
 
 public:
-	const char* Data() const { return buffer; }
+	const char* Data() const { return _buffer; }
 
 public:
 	// Copy assignment
 	DDString& operator=(const DDString& otherString)
 	{
 		if (this == &otherString) return *this;
-		delete[] buffer;
+		delete[] _buffer;
 
-		if (!otherString.buffer || otherString.bufferSize <= 0)
+		if (!otherString._buffer || otherString._bufferSize <= 0)
 		{
-			bufferSize = 0;
-			bufferCapacity = 10;
+			_bufferSize = 0;
+			_bufferCapacity = 10;
 
-			buffer = new char[bufferCapacity];
-			buffer[bufferSize] = 0x00;
+			_buffer = new char[_bufferCapacity];
+			_buffer[_bufferSize] = 0x00;
 			return *this;
 		}
 
-		bufferSize = otherString.bufferSize;
-		bufferCapacity = (bufferSize >= otherString.bufferCapacity) ? (bufferSize + 1) : otherString.bufferCapacity;
-		buffer = new char[bufferCapacity];
+		_bufferSize = otherString._bufferSize;
+		_bufferCapacity = (_bufferSize >= otherString._bufferCapacity) ? (_bufferSize + 1) : otherString._bufferCapacity;
+		_buffer = new char[_bufferCapacity];
 
-		memcpy(buffer, otherString.buffer, bufferSize);
-		buffer[bufferSize] = 0x00;
+		memcpy(_buffer, otherString._buffer, _bufferSize);
+		_buffer[_bufferSize] = 0x00;
 
 		return *this;
 	}
@@ -66,15 +66,15 @@ public:
 	DDString& operator=(DDString&& otherString) noexcept
 	{
 		if (this == &otherString) return *this;
-		delete[] buffer;
+		delete[] _buffer;
 
-		buffer = otherString.buffer;
-		bufferSize = otherString.bufferSize;
-		bufferCapacity = otherString.bufferCapacity;
+		_buffer = otherString._buffer;
+		_bufferSize = otherString._bufferSize;
+		_bufferCapacity = otherString._bufferCapacity;
 
-		otherString.buffer = nullptr;
-		otherString.bufferSize = 0;
-		otherString.bufferCapacity = 0;
+		otherString._buffer = nullptr;
+		otherString._bufferSize = 0;
+		otherString._bufferCapacity = 0;
 
 		return *this;
 	}

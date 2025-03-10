@@ -6,90 +6,90 @@ template <typename T>
 class DDList
 {
 private:
-	T* buffer;
-	int bufferSize;
-	int bufferCapacity;
+	T* _buffer;
+	int _bufferSize;
+	int _bufferCapacity;
 
 public:
 	DDList()
 	{
-		bufferSize = 0;
-		bufferCapacity = 1;
+		_bufferSize = 0;
+		_bufferCapacity = 1;
 
-		buffer = new T[bufferCapacity];
+		_buffer = new T[_bufferCapacity];
 	}
 	DDList(const DDList<T>& otherList)
 	{
-		if (!otherList.buffer || otherList.bufferSize <= 0)
+		if (!otherList._buffer || otherList._bufferSize <= 0)
 		{
-			bufferSize = 0;
-			bufferCapacity = 1;
+			_bufferSize = 0;
+			_bufferCapacity = 1;
 
-			buffer = new T[bufferCapacity];
+			_buffer = new T[_bufferCapacity];
 			return;
 		}
 
-		bufferSize = otherList.bufferSize;
-		bufferCapacity = (bufferSize >= otherList.bufferCapacity) ? (bufferSize + 1) : otherList.bufferCapacity;
-		buffer = new char[bufferCapacity];
+		_bufferSize = otherList._bufferSize;
+		_bufferCapacity = (_bufferSize >= otherList._bufferCapacity) ? (_bufferSize + 1) : otherList._bufferCapacity;
+		_buffer = new char[_bufferCapacity];
 
-		std::copy(otherList.buffer, otherList.buffer + otherList.bufferSize, buffer);
+		std::copy(otherList._buffer, otherList._buffer + otherList._bufferSize, _buffer);
 	}
 	DDList(DDList<T>&& otherList) noexcept
 	{
-		buffer = otherList.buffer;
-		bufferSize = otherList.bufferSize;
-		bufferCapacity = otherList.bufferCapacity;
+		_buffer = otherList._buffer;
+		_bufferSize = otherList._bufferSize;
+		_bufferCapacity = otherList._bufferCapacity;
 
-		otherList.buffer = nullptr;
-		otherList.bufferSize = 0;
-		otherList.bufferCapacity = 0;
+		otherList._buffer = nullptr;
+		otherList._bufferSize = 0;
+		otherList._bufferCapacity = 0;
 	}
 	~DDList()
 	{
-		if (buffer)
+		if (_buffer)
 		{
-			delete[] buffer;
-			buffer = nullptr;
+			delete[] _buffer;
+			_buffer = nullptr;
 		}
 
-		bufferSize = 0;
-		bufferCapacity = 0;
+		_bufferSize = 0;
+		_bufferCapacity = 0;
 	}
 
 private:
 	// Increases buffer capacity by increase amount
 	void IncreaseBufferSize(int increaseAmount)
 	{
-		bufferCapacity += increaseAmount;
-		T* newBuffer = new T[bufferCapacity];
+		_bufferCapacity += increaseAmount;
+		T* newBuffer = new T[_bufferCapacity];
 
-		if (buffer)
+		if (_buffer)
 		{
-			std::copy(buffer, buffer + bufferSize, newBuffer);
-			delete[] buffer;
+			std::copy(_buffer, _buffer + _bufferSize, newBuffer);
+			delete[] _buffer;
 		}
 
-		buffer = newBuffer;
+		_buffer = newBuffer;
 	}
 
 public:
-	const T* Data() const { return buffer; }
+	const T* Data() const { return _buffer; }
 
 	void AddItem(const T& itemToAdd)
 	{
-		if ((bufferSize + 1) > bufferCapacity) IncreaseBufferSize((bufferSize + 1) - bufferCapacity);
-		buffer[bufferSize++] = itemToAdd;
+		if ((_bufferSize + 1) > _bufferCapacity) IncreaseBufferSize((_bufferSize + 1) - _bufferCapacity);
+		_buffer[_bufferSize++] = itemToAdd;
 	}
 
 	int Length()
 	{
-		return bufferSize;
+		return _bufferSize;
 	}
 
 	T& GetAt(int at)
 	{
-		return buffer[at];
+		return _buffer[at];
 	}
 
 public:
@@ -97,22 +97,22 @@ public:
 	DDList& operator=(const DDList& otherList)
 	{
 		if (this == &otherList) return *this;
-		delete[] buffer;
+		delete[] _buffer;
 
-		if (!otherList.buffer || otherList.bufferSize <= 0)
+		if (!otherList._buffer || otherList._bufferSize <= 0)
 		{
-			bufferSize = 0;
-			bufferCapacity = 1;
+			_bufferSize = 0;
+			_bufferCapacity = 1;
 
-			buffer = new T[bufferCapacity];
+			_buffer = new T[_bufferCapacity];
 			return;
 		}
 
-		bufferSize = otherList.bufferSize;
-		bufferCapacity = (bufferSize >= otherList.bufferCapacity) ? (bufferSize + 1) : otherList.bufferCapacity;
-		buffer = new char[bufferCapacity];
+		_bufferSize = otherList._bufferSize;
+		_bufferCapacity = (_bufferSize >= otherList._bufferCapacity) ? (_bufferSize + 1) : otherList._bufferCapacity;
+		_buffer = new char[_bufferCapacity];
 
-		std::copy(otherList.buffer, otherList.buffer + otherList.bufferSize, buffer);
+		std::copy(otherList._buffer, otherList._buffer + otherList._bufferSize, _buffer);
 
 		return *this;
 	}
@@ -121,15 +121,15 @@ public:
 	DDList& operator=(DDList&& otherList) noexcept
 	{
 		if (this == &otherList) return *this;
-		delete[] buffer;
+		delete[] _buffer;
 
-		buffer = otherList.buffer;
-		bufferSize = otherList.bufferSize;
-		bufferCapacity = otherList.bufferCapacity;
+		_buffer = otherList._buffer;
+		_bufferSize = otherList._bufferSize;
+		_bufferCapacity = otherList._bufferCapacity;
 
-		otherList.buffer = nullptr;
-		otherList.bufferSize = 0;
-		otherList.bufferCapacity = 0;
+		otherList._buffer = nullptr;
+		otherList._bufferSize = 0;
+		otherList._bufferCapacity = 0;
 
 		return *this;
 	}

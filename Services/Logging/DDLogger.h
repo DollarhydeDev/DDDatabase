@@ -5,8 +5,8 @@
 class DDLogger
 {
 private:
-	DDString infoPrefix;
-	DDString errorPrefix;
+	DDString _infoPrefix;
+	DDString _errorPrefix;
 
 public:
 	DDLogger();

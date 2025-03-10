@@ -5,9 +5,9 @@
 #include <stdio.h>
 #pragma comment(lib, "Ws2_32.lib")
 
-#include "../../../DataTypes/List/DDList.h"
-#include "../../Logging/DDLogger.h"
-#include "../Sockets/ServerSocket/ServerSocket.h"
+#include "List/DDList.h"
+#include "Logging/DDLogger.h"
+#include "ServerSocket/ServerSocket.h"
 
 class DDServer
 {

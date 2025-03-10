@@ -2,104 +2,104 @@
 
 DDString::DDString()
 {
-	bufferSize = 0;
-	bufferCapacity = 10;
+	_bufferSize = 0;
+	_bufferCapacity = 10;
 
-	buffer = new char[bufferCapacity];
-	buffer[bufferSize] = 0x00;
+	_buffer = new char[_bufferCapacity];
+	_buffer[_bufferSize] = 0x00;
 }
 DDString::DDString(char* inBuffer)
 {
 	if (!inBuffer)
 	{
-		bufferSize = 0;
-		bufferCapacity = 10;
+		_bufferSize = 0;
+		_bufferCapacity = 10;
 
-		buffer = new char[bufferCapacity];
-		buffer[bufferSize] = 0x00;
+		_buffer = new char[_bufferCapacity];
+		_buffer[_bufferSize] = 0x00;
 		return;
 	}
 
-	bufferSize = 0;
-	while (inBuffer[bufferSize] != 0x00) bufferSize++;
-	bufferCapacity = bufferSize + 1;
+	_bufferSize = 0;
+	while (inBuffer[_bufferSize] != 0x00) _bufferSize++;
+	_bufferCapacity = _bufferSize + 1;
 
-	buffer = new char[bufferCapacity];
-	memcpy(buffer, inBuffer, bufferSize);
-	buffer[bufferSize] = 0x00;
+	_buffer = new char[_bufferCapacity];
+	memcpy(_buffer, inBuffer, _bufferSize);
+	_buffer[_bufferSize] = 0x00;
 }
 DDString::DDString(const char* inBuffer)
 {
 	if (!inBuffer)
 	{
-		bufferSize = 0;
-		bufferCapacity = 10;
+		_bufferSize = 0;
+		_bufferCapacity = 10;
 
-		buffer = new char[bufferCapacity];
-		buffer[bufferSize] = 0x00;
+		_buffer = new char[_bufferCapacity];
+		_buffer[_bufferSize] = 0x00;
 		return;
 	}
 
-	bufferSize = 0;
-	while (inBuffer[bufferSize] != 0x00) bufferSize++;
-	bufferCapacity = bufferSize + 1;
+	_bufferSize = 0;
+	while (inBuffer[_bufferSize] != 0x00) _bufferSize++;
+	_bufferCapacity = _bufferSize + 1;
 
-	buffer = new char[bufferCapacity];
-	memcpy(buffer, inBuffer, bufferSize);
-	buffer[bufferSize] = 0x00;
+	_buffer = new char[_bufferCapacity];
+	memcpy(_buffer, inBuffer, _bufferSize);
+	_buffer[_bufferSize] = 0x00;
 }
 DDString::DDString(const DDString& otherString)
 {
-	if (!otherString.buffer || otherString.bufferSize <= 0)
+	if (!otherString._buffer || otherString._bufferSize <= 0)
 	{
-		bufferSize = 0;
-		bufferCapacity = 10;
+		_bufferSize = 0;
+		_bufferCapacity = 10;
 
-		buffer = new char[bufferCapacity];
-		buffer[bufferSize] = 0x00;
+		_buffer = new char[_bufferCapacity];
+		_buffer[_bufferSize] = 0x00;
 		return;
 	}
 
-	bufferSize = otherString.bufferSize;
-	bufferCapacity = (bufferSize >= otherString.bufferCapacity) ? (bufferSize + 1) : otherString.bufferCapacity;
-	buffer = new char[bufferCapacity];
+	_bufferSize = otherString._bufferSize;
+	_bufferCapacity = (_bufferSize >= otherString._bufferCapacity) ? (_bufferSize + 1) : otherString._bufferCapacity;
+	_buffer = new char[_bufferCapacity];
 
-	memcpy(buffer, otherString.buffer, bufferSize);
-	buffer[bufferSize] = 0x00;
+	memcpy(_buffer, otherString._buffer, _bufferSize);
+	_buffer[_bufferSize] = 0x00;
 }
 DDString::DDString(DDString&& otherString) noexcept
 {
-	buffer = otherString.buffer;
-	bufferSize = otherString.bufferSize;
-	bufferCapacity = otherString.bufferCapacity;
+	_buffer = otherString._buffer;
+	_bufferSize = otherString._bufferSize;
+	_bufferCapacity = otherString._bufferCapacity;
 
-	otherString.buffer = nullptr;
-	otherString.bufferSize = 0;
-	otherString.bufferCapacity = 0;
+	otherString._buffer = nullptr;
+	otherString._bufferSize = 0;
+	otherString._bufferCapacity = 0;
 }
 DDString::~DDString()
 {
-	if (buffer)
+	if (_buffer)
 	{
-		delete[] buffer;
-		buffer = nullptr;
+		delete[] _buffer;
+		_buffer = nullptr;
 	}
 
-	bufferSize = 0;
-	bufferCapacity = 0;
+	_bufferSize = 0;
+	_bufferCapacity = 0;
 }
 
 void DDString::IncreaseBufferSize(int increaseAmount)
 {
-	bufferCapacity += increaseAmount;
-	char* newBuffer = new char[bufferCapacity];
+	_bufferCapacity += increaseAmount;
+	char* newBuffer = new char[_bufferCapacity];
 
-	if (buffer)
+	if (_buffer)
 	{
-		memcpy(newBuffer, buffer, bufferSize);
-		delete[] buffer;
+		memcpy(newBuffer, _buffer, _bufferSize);
+		delete[] _buffer;
 	}
 
-	buffer = newBuffer;
-	buffer[bufferSize] = 0x00;
+	_buffer = newBuffer;
+	_buffer[_bufferSize] = 0x00;
 }
