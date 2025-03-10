@@ -1,37 +1,45 @@
 #include "DDServer.h"
 
-DDServer::DDServer(DDLogger& logger) : logger(logger), serverSocket(logger), wsaData()
+DDServer::DDServer() : _logger(DDLogger::GetInstance())
 {
+    _wsaData = {};
 }
-
 DDServer::~DDServer()
 {
 	WSACleanup();
 }
 
+DDServer& DDServer::GetInstance()
+{
+    static DDServer instance;
+    return instance;
+}
+
 bool DDServer::Init()
 {
-	int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	int result = WSAStartup(MAKEWORD(2, 2), &_wsaData);
 	if (result != 0)
 	{
-		logger.LogError("Server initialization failed");
+		_logger.LogError("Server initialization failed");
 		return false;		
 	}
 
-	logger.LogInfo("Server initialized");
+	_logger.LogInfo("Server initialized");
 	return true;
 }
 
 void DDServer::WaitForConnection(DDString portToListenOn)
 {
-    if (serverSocket.BindAndListen("8080"))
+    ServerSocket serverSocket = _serverSockets.Data()[0];
+
+    if (serverSocket.BindAndListen(portToListenOn.Data()))
     {
         while (true)
         {
             SOCKET client = serverSocket.AcceptConnection();
             if (client != INVALID_SOCKET)
             {
-                logger.LogInfo("New client connection established.");
+                _logger.LogInfo("New client connection established.");
                 closesocket(client);
             }
         }

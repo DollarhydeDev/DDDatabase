@@ -4,15 +4,11 @@
 
 int main()
 {
-	// Setup dependencies
-	DDLogger logger{};
-	DDServer server{ logger };
-
-	// Launch new DB instance with dependencies
-	DDDatabase DatabaseInstance(logger, server);
+	// Launch new DB instance
+	DDDatabase databaseInstance;
 	{
-		if (!DatabaseInstance.Init()) return 1;
-		DatabaseInstance.Run();
+		if (!databaseInstance.Init()) return 1;
+		databaseInstance.Run();
 	}
 
 	return 0;

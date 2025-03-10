@@ -29,17 +29,8 @@ public:
 	~DDString();
 
 private:
-	// Ensures that buffersize does not exceed buffer capacity
-	void PerformSafetyChecks();
-
 	// Increases buffer capacity by increase amount
 	void IncreaseBufferSize(int increaseAmount);
-
-	// Copies source buffer into dest buffer and returns source (null terminated). Optionally can destroy source buffer
-	char* BufferCopy(char* destBuffer, char* sourceBuffer, int sourceBufferSize, bool deleteSourceBuffer = false);
-
-	// Copies source buffer into dest buffer and returns source (null terminated)
-	char* BufferCopy(char* destBuffer, const char* sourceBuffer, int sourceBufferSize);
 
 public:
 	const char* Data() const { return buffer; }
@@ -49,14 +40,24 @@ public:
 	DDString& operator=(const DDString& otherString)
 	{
 		if (this == &otherString) return *this;
-		if (buffer) delete[] buffer;
+		delete[] buffer;
+
+		if (!otherString.buffer || otherString.bufferSize <= 0)
+		{
+			bufferSize = 0;
+			bufferCapacity = 10;
+
+			buffer = new char[bufferCapacity];
+			buffer[bufferSize] = 0x00;
+			return *this;
+		}
 
 		bufferSize = otherString.bufferSize;
-		bufferCapacity = otherString.bufferCapacity;
-		PerformSafetyChecks();
+		bufferCapacity = (bufferSize >= otherString.bufferCapacity) ? (bufferSize + 1) : otherString.bufferCapacity;
+		buffer = new char[bufferCapacity];
 
-		char* newBuffer = new char[bufferCapacity];
-		buffer = BufferCopy(newBuffer, otherString.buffer, bufferSize);
+		memcpy(buffer, otherString.buffer, bufferSize);
+		buffer[bufferSize] = 0x00;
 
 		return *this;
 	}
@@ -65,17 +66,15 @@ public:
 	DDString& operator=(DDString&& otherString) noexcept
 	{
 		if (this == &otherString) return *this;
-		if (buffer) delete[] buffer;
-
-		bufferSize = otherString.bufferSize;
-		bufferCapacity = otherString.bufferCapacity;
-		PerformSafetyChecks();
+		delete[] buffer;
 
 		buffer = otherString.buffer;
+		bufferSize = otherString.bufferSize;
+		bufferCapacity = otherString.bufferCapacity;
 
+		otherString.buffer = nullptr;
 		otherString.bufferSize = 0;
 		otherString.bufferCapacity = 0;
-		otherString.buffer = nullptr;
 
 		return *this;
 	}

@@ -11,13 +11,13 @@ class ServerSocket
 {
 	// Members
 private:
-	DDLogger& logger;
-	addrinfo socketSettings;
-	SOCKET listenSocket;
+	DDLogger& _logger;
+	addrinfo _socketSettings;
+	SOCKET _listenSocket;
 
 	// Constructors
 public:
-	ServerSocket(DDLogger& logger);
+	ServerSocket();
 	~ServerSocket();
 
 private:

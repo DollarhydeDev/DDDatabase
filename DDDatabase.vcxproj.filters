@@ -6,13 +6,14 @@
     <ClInclude Include="Services\Logging\DDLogger.h" />
     <ClInclude Include="Services\Networking\Server\DDServer.h" />
     <ClInclude Include="Services\Networking\Sockets\ServerSocket\ServerSocket.h" />
+    <ClInclude Include="DataTypes\List\DDList.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DataTypes\String\DDString.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Core\DDDatabase.cpp" />
     <ClCompile Include="Services\Logging\DDLogger.cpp" />
     <ClCompile Include="Services\Networking\Server\DDServer.cpp" />
     <ClCompile Include="Services\Networking\Sockets\ServerSocket\ServerSocket.cpp" />
+    <ClCompile Include="DataTypes\String\DDString.cpp" />
   </ItemGroup>
 </Project>

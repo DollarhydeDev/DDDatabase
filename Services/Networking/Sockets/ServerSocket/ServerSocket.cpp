@@ -1,12 +1,12 @@
 #include "ServerSocket.h"
 
-ServerSocket::ServerSocket(DDLogger& logger) : logger(logger)
+ServerSocket::ServerSocket() : _logger(DDLogger::GetInstance())
 {
-    listenSocket = INVALID_SOCKET;
-    ZeroMemory(&socketSettings, sizeof(socketSettings));
-    socketSettings.ai_family = AF_INET;
-    socketSettings.ai_socktype = SOCK_STREAM;
-    socketSettings.ai_protocol = IPPROTO_TCP;
+    _listenSocket = INVALID_SOCKET;
+    ZeroMemory(&_socketSettings, sizeof(_socketSettings));
+    _socketSettings.ai_family = AF_INET;
+    _socketSettings.ai_socktype = SOCK_STREAM;
+    _socketSettings.ai_protocol = IPPROTO_TCP;
 }
 ServerSocket::~ServerSocket()
 {
@@ -15,63 +15,63 @@ ServerSocket::~ServerSocket()
 
 bool ServerSocket::BindAndListen(const char* port, int backlog)
 {
-    logger.LogInfo("Initializing server socket...");
+    _logger.LogInfo("Initializing server socket...");
 
     addrinfo* addressInfo = nullptr;
-    if (getaddrinfo(NULL, port, &socketSettings, &addressInfo) != 0)
+    if (getaddrinfo(NULL, port, &_socketSettings, &addressInfo) != 0)
     {
-        logger.LogInfo("getaddrinfo failed");
+        _logger.LogInfo("getaddrinfo failed");
         return false;
     }
 
-    listenSocket = socket(addressInfo->ai_family, addressInfo->ai_socktype, addressInfo->ai_protocol);
-    if (listenSocket == INVALID_SOCKET)
+    _listenSocket = socket(addressInfo->ai_family, addressInfo->ai_socktype, addressInfo->ai_protocol);
+    if (_listenSocket == INVALID_SOCKET)
     {
-        logger.LogInfo("Socket creation failed.");
+        _logger.LogInfo("Socket creation failed.");
         freeaddrinfo(addressInfo);
         return false;
     }
 
-    if (bind(listenSocket, addressInfo->ai_addr, (int)addressInfo->ai_addrlen) == SOCKET_ERROR)
+    if (bind(_listenSocket, addressInfo->ai_addr, (int)addressInfo->ai_addrlen) == SOCKET_ERROR)
     {
-        logger.LogInfo("Bind failed.");
+        _logger.LogInfo("Bind failed.");
         freeaddrinfo(addressInfo);
-        closesocket(listenSocket);
+        closesocket(_listenSocket);
         return false;
     }
 
     freeaddrinfo(addressInfo);
 
-    if (listen(listenSocket, backlog) == SOCKET_ERROR)
+    if (listen(_listenSocket, backlog) == SOCKET_ERROR)
     {
-        logger.LogInfo("Listen failed.");
-        closesocket(listenSocket);
+        _logger.LogInfo("Listen failed.");
+        closesocket(_listenSocket);
         return false;
     }
 
-    logger.LogInfo("Server socket is now listening");
+    _logger.LogInfo("Server socket is now listening");
     return true;
 }
 
 SOCKET ServerSocket::AcceptConnection()
 {
-    SOCKET clientSocket = accept(listenSocket, NULL, NULL);
+    SOCKET clientSocket = accept(_listenSocket, NULL, NULL);
     if (clientSocket == INVALID_SOCKET)
     {
-        logger.LogInfo("Failed to accept client connection.");
+        _logger.LogInfo("Failed to accept client connection.");
         return INVALID_SOCKET;
     }
 
-    logger.LogInfo("Client connected!");
+    _logger.LogInfo("Client connected!");
     return clientSocket;
 }
 
 void ServerSocket::CloseSocket()
 {
-    if (listenSocket != INVALID_SOCKET)
+    if (_listenSocket != INVALID_SOCKET)
     {
-        closesocket(listenSocket);
-        listenSocket = INVALID_SOCKET;
-        logger.LogInfo("Socket closed.");
+        closesocket(_listenSocket);
+        _listenSocket = INVALID_SOCKET;
+        _logger.LogInfo("Socket closed.");
     }
 }

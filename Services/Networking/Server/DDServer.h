@@ -5,19 +5,22 @@
 #include <stdio.h>
 #pragma comment(lib, "Ws2_32.lib")
 
+#include "../../../DataTypes/List/DDList.h"
 #include "../../Logging/DDLogger.h"
 #include "../Sockets/ServerSocket/ServerSocket.h"
-	
+
 class DDServer
 {
 private:
-	WSADATA wsaData;
-	DDLogger& logger;
-	ServerSocket serverSocket;
+	WSADATA _wsaData;
+	DDLogger& _logger;
+	DDList<ServerSocket> _serverSockets;
 
 public:
-	DDServer(DDLogger& logger);
+	DDServer();
 	~DDServer();
+
+	static DDServer& GetInstance();
 
 public:
 	bool Init();

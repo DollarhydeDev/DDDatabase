@@ -10,6 +10,7 @@ private:
 
 public:
 	DDLogger();
+	static DDLogger& GetInstance();
 
 	void LogInfo(DDString message);
 	void LogInfo(const char* message);

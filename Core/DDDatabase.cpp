@@ -1,29 +1,30 @@
 #include "DDDatabase.h"
 
-DDDatabase::DDDatabase(DDLogger& logger, DDServer& server) : logger(logger), server(server)
+DDDatabase::DDDatabase() : _server(DDServer::GetInstance()), _logger(DDLogger::GetInstance())
 {
 }
 
 DDDatabase::~DDDatabase()
 {
-	logger.LogInfo("Database cleaning up...");
-	logger.LogInfo("Cleanup finished");
+	_logger.LogInfo("Database cleaning up...");
+	_logger.LogInfo("Cleanup finished");
 }
 
 bool DDDatabase::Init()
 {
-	logger.LogInfo("Database initializing...");
-	if (!server.Init())
+	_logger.LogInfo("Database initializing...");
+	if (!_server.Init())
 	{
-		logger.LogError("Database failed to initialize");
+		_logger.LogError("Database failed to initialize");
 		return false;
 	}
 
-	logger.LogInfo("Database initialized");
+	_logger.LogInfo("Database initialized");
 	return true;
 }
 
 void DDDatabase::Run()
 {
-	logger.LogInfo("Database started");
+	_logger.LogInfo("Database started");
+	//server.WaitForConnection("8000");
 }

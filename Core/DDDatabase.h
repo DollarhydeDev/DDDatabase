@@ -1,18 +1,19 @@
 #pragma once
 
-#include "../Services/Logging/DDLogger.h"
-#include "../Services/Networking/Server/DDServer.h"
+#include "List/DDList.h"
+#include "Logging/DDLogger.h"
+#include "Server/DDServer.h"
 
 class DDDatabase
 {
 	// Members
 private:
-	DDServer& server;
-	DDLogger& logger;
+	DDServer& _server;
+	DDLogger& _logger;
 
 	// Constructors
 public:
-	DDDatabase(DDLogger& logger, DDServer& server);
+	DDDatabase();
 	~DDDatabase();
 
 	// Private Functions

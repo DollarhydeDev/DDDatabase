@@ -6,6 +6,12 @@ DDLogger::DDLogger()
 	errorPrefix = "[ERROR] ";
 }
 
+DDLogger& DDLogger::GetInstance()
+{
+	static DDLogger instance;
+	return instance;
+}
+
 void DDLogger::LogInfo(DDString message)
 {
 	std::cout << infoPrefix << message << std::endl;

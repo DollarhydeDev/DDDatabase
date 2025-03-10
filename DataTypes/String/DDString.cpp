@@ -4,10 +4,9 @@ DDString::DDString()
 {
 	bufferSize = 0;
 	bufferCapacity = 10;
-	PerformSafetyChecks();
 
 	buffer = new char[bufferCapacity];
-	buffer[bufferSize] = '\0';
+	buffer[bufferSize] = 0x00;
 }
 DDString::DDString(char* inBuffer)
 {
@@ -15,21 +14,19 @@ DDString::DDString(char* inBuffer)
 	{
 		bufferSize = 0;
 		bufferCapacity = 10;
-		PerformSafetyChecks();
 
 		buffer = new char[bufferCapacity];
-		buffer[0] = '\0';
+		buffer[bufferSize] = 0x00;
 		return;
 	}
 
 	bufferSize = 0;
-	while (inBuffer[bufferSize] != '\0') bufferSize++;
-
+	while (inBuffer[bufferSize] != 0x00) bufferSize++;
 	bufferCapacity = bufferSize + 1;
-	PerformSafetyChecks();
 
-	char* newBuffer = new char[bufferCapacity];
-	buffer = BufferCopy(newBuffer, inBuffer, bufferSize);
+	buffer = new char[bufferCapacity];
+	memcpy(buffer, inBuffer, bufferSize);
+	buffer[bufferSize] = 0x00;
 }
 DDString::DDString(const char* inBuffer)
 {
@@ -37,43 +34,48 @@ DDString::DDString(const char* inBuffer)
 	{
 		bufferSize = 0;
 		bufferCapacity = 10;
-		PerformSafetyChecks();
 
 		buffer = new char[bufferCapacity];
-		buffer[0] = '\0';
+		buffer[bufferSize] = 0x00;
 		return;
 	}
 
 	bufferSize = 0;
-	while (inBuffer[bufferSize] != '\0') bufferSize++;
-
+	while (inBuffer[bufferSize] != 0x00) bufferSize++;
 	bufferCapacity = bufferSize + 1;
-	PerformSafetyChecks();
 
-	char* newBuffer = new char[bufferCapacity];
-	buffer = BufferCopy(newBuffer, inBuffer, bufferSize);
+	buffer = new char[bufferCapacity];
+	memcpy(buffer, inBuffer, bufferSize);
+	buffer[bufferSize] = 0x00;
 }
 DDString::DDString(const DDString& otherString)
 {
-	bufferSize = otherString.bufferSize;
-	bufferCapacity = otherString.bufferCapacity;
-	PerformSafetyChecks();
+	if (!otherString.buffer || otherString.bufferSize <= 0)
+	{
+		bufferSize = 0;
+		bufferCapacity = 10;
 
-	char* newBuffer = new char[bufferCapacity];
-	buffer = BufferCopy(newBuffer, otherString.buffer, bufferSize);
+		buffer = new char[bufferCapacity];
+		buffer[bufferSize] = 0x00;
+		return;
+	}
+
+	bufferSize = otherString.bufferSize;
+	bufferCapacity = (bufferSize >= otherString.bufferCapacity) ? (bufferSize + 1) : otherString.bufferCapacity;
+	buffer = new char[bufferCapacity];
+
+	memcpy(buffer, otherString.buffer, bufferSize);
+	buffer[bufferSize] = 0x00;
 }
 DDString::DDString(DDString&& otherString) noexcept
 {
+	buffer = otherString.buffer;
 	bufferSize = otherString.bufferSize;
 	bufferCapacity = otherString.bufferCapacity;
-	PerformSafetyChecks();
 
-	buffer = otherString.buffer;
-	buffer[bufferSize] = '\0';
-
+	otherString.buffer = nullptr;
 	otherString.bufferSize = 0;
 	otherString.bufferCapacity = 0;
-	otherString.buffer = nullptr;
 }
 DDString::~DDString()
 {
@@ -87,39 +89,17 @@ DDString::~DDString()
 	bufferCapacity = 0;
 }
 
-void DDString::PerformSafetyChecks()
-{
-	if (bufferSize > bufferCapacity)
-	{
-		int resizeAmount = (bufferSize - bufferCapacity) + 1;
-		IncreaseBufferSize(resizeAmount);
-	}
-}
-
 void DDString::IncreaseBufferSize(int increaseAmount)
 {
 	bufferCapacity += increaseAmount;
-
 	char* newBuffer = new char[bufferCapacity];
-	bool deleteSourceBuffer = true;
-	buffer = BufferCopy(newBuffer, buffer, bufferSize, deleteSourceBuffer);
-}
-char* DDString::BufferCopy(char* destBuffer, char* sourceBuffer, const int sourceBufferSize, const bool deleteSourceBuffer)
-{
-	std::memcpy(destBuffer, sourceBuffer, sourceBufferSize);
-	destBuffer[sourceBufferSize] = '\0';
 
-	if (deleteSourceBuffer)
+	if (buffer)
 	{
-		delete[] sourceBuffer;
+		memcpy(newBuffer, buffer, bufferSize);
+		delete[] buffer;
 	}
 
-	return destBuffer;
-}
-char* DDString::BufferCopy(char* destBuffer, const char* sourceBuffer, int sourceBufferSize)
-{
-	std::memcpy(destBuffer, sourceBuffer, sourceBufferSize);
-	destBuffer[sourceBufferSize] = '\0';
-
-	return destBuffer;
+	buffer = newBuffer;
+	buffer[bufferSize] = 0x00;
 }
