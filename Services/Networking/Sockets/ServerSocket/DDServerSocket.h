@@ -7,7 +7,7 @@
 
 #include "Logging/DDLogger.h"
 
-class ServerSocket
+class DDServerSocket
 {
 	// Members
 private:
@@ -17,8 +17,8 @@ private:
 
 	// Constructors
 public:
-	ServerSocket();
-	~ServerSocket();
+	DDServerSocket();
+	~DDServerSocket();
 
 private:
 	

@@ -1,9 +1,6 @@
 #include "DDServer.h"
 
-DDServer::DDServer() : _logger(DDLogger::GetInstance())
-{
-    _wsaData = {};
-}
+DDServer::DDServer() : _logger(DDLogger::GetInstance()), _serverSocket(), _wsaData() {}
 DDServer::~DDServer()
 {
 	WSACleanup();
@@ -30,13 +27,11 @@ bool DDServer::Init()
 
 void DDServer::WaitForConnection(DDString portToListenOn)
 {
-    ServerSocket serverSocket = _serverSockets.Data()[0];
-
-    if (serverSocket.BindAndListen(portToListenOn.Data()))
+    if (_serverSocket.BindAndListen(portToListenOn.Data()))
     {
         while (true)
         {
-            SOCKET client = serverSocket.AcceptConnection();
+            SOCKET client = _serverSocket.AcceptConnection();
             if (client != INVALID_SOCKET)
             {
                 _logger.LogInfo("New client connection established.");

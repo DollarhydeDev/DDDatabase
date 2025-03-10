@@ -19,17 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\DatabaseActions\DDQuery.h" />
     <ClInclude Include="DataTypes\String\DDString.h" />
     <ClInclude Include="Core\DDDatabase.h" />
     <ClInclude Include="DataTypes\List\DDList.h" />
-    <ClInclude Include="Services\Networking\Sockets\ServerSocket\ServerSocket.h" />
+    <ClInclude Include="Services\Networking\Sockets\ServerSocket\DDServerSocket.h" />
     <ClInclude Include="Services\Networking\Server\DDServer.h" />
     <ClInclude Include="Services\Logging\DDLogger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\DDDatabase.cpp" />
     <ClCompile Include="DataTypes\String\DDString.cpp" />
-    <ClCompile Include="Services\Networking\Sockets\ServerSocket\ServerSocket.cpp" />
+    <ClCompile Include="Services\Networking\Sockets\ServerSocket\DDServerSocket.cpp" />
     <ClCompile Include="Services\Networking\Server\DDServer.cpp" />
     <ClCompile Include="Services\Logging\DDLogger.cpp" />
     <ClCompile Include="main.cpp" />

@@ -1,9 +1,6 @@
 #include "DDDatabase.h"
 
-DDDatabase::DDDatabase() : _server(DDServer::GetInstance()), _logger(DDLogger::GetInstance())
-{
-}
-
+DDDatabase::DDDatabase() : _server(DDServer::GetInstance()), _logger(DDLogger::GetInstance()) {}
 DDDatabase::~DDDatabase()
 {
 	_logger.LogInfo("Database cleaning up...");
@@ -26,5 +23,5 @@ bool DDDatabase::Init()
 void DDDatabase::Run()
 {
 	_logger.LogInfo("Database started");
-	//server.WaitForConnection("8000");
+	_server.WaitForConnection("8000");
 }

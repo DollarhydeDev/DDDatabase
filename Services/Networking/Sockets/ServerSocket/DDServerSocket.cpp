@@ -1,6 +1,6 @@
-#include "ServerSocket.h"
+#include "DDServerSocket.h"
 
-ServerSocket::ServerSocket() : _logger(DDLogger::GetInstance())
+DDServerSocket::DDServerSocket() : _logger(DDLogger::GetInstance())
 {
     _listenSocket = INVALID_SOCKET;
     ZeroMemory(&_socketSettings, sizeof(_socketSettings));
@@ -8,12 +8,12 @@ ServerSocket::ServerSocket() : _logger(DDLogger::GetInstance())
     _socketSettings.ai_socktype = SOCK_STREAM;
     _socketSettings.ai_protocol = IPPROTO_TCP;
 }
-ServerSocket::~ServerSocket()
+DDServerSocket::~DDServerSocket()
 {
     CloseSocket();
 }
 
-bool ServerSocket::BindAndListen(const char* port, int backlog)
+bool DDServerSocket::BindAndListen(const char* port, int backlog)
 {
     _logger.LogInfo("Initializing server socket...");
 
@@ -35,8 +35,8 @@ bool ServerSocket::BindAndListen(const char* port, int backlog)
     if (bind(_listenSocket, addressInfo->ai_addr, (int)addressInfo->ai_addrlen) == SOCKET_ERROR)
     {
         _logger.LogInfo("Bind failed.");
-        freeaddrinfo(addressInfo);
         closesocket(_listenSocket);
+        freeaddrinfo(addressInfo);
         return false;
     }
 
@@ -53,7 +53,7 @@ bool ServerSocket::BindAndListen(const char* port, int backlog)
     return true;
 }
 
-SOCKET ServerSocket::AcceptConnection()
+SOCKET DDServerSocket::AcceptConnection()
 {
     SOCKET clientSocket = accept(_listenSocket, NULL, NULL);
     if (clientSocket == INVALID_SOCKET)
@@ -66,7 +66,7 @@ SOCKET ServerSocket::AcceptConnection()
     return clientSocket;
 }
 
-void ServerSocket::CloseSocket()
+void DDServerSocket::CloseSocket()
 {
     if (_listenSocket != INVALID_SOCKET)
     {

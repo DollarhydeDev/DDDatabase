@@ -7,22 +7,28 @@
 
 #include "List/DDList.h"
 #include "Logging/DDLogger.h"
-#include "ServerSocket/ServerSocket.h"
+#include "ServerSocket/DDServerSocket.h"
 
 class DDServer
 {
+	// Members
 private:
 	WSADATA _wsaData;
 	DDLogger& _logger;
-	DDList<ServerSocket> _serverSockets;
+	DDServerSocket _serverSocket;
 
+	// Constructors
 public:
 	DDServer();
 	~DDServer();
 
+	// Private Functions
+private:
+
+	// Public functions
+public:
 	static DDServer& GetInstance();
 
-public:
 	bool Init();
 	void WaitForConnection(DDString portToListenOn);
 };
