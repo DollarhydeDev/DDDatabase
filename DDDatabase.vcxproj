@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\DatabaseActions\DDQuery.h" />
+    <ClInclude Include="Core\DatabaseActions\DDDatabaseQuery.h" />
     <ClInclude Include="DataTypes\String\DDString.h" />
     <ClInclude Include="Core\DDDatabase.h" />
     <ClInclude Include="DataTypes\List\DDList.h" />
@@ -121,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Services\Networking\Sockets;$(ProjectDir)Services\Networking;$(ProjectDir)Services\Logging;$(ProjectDir)Services;$(ProjectDir)DataTypes;$(ProjectDir)Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Core;$(ProjectDir)Services\Networking\Sockets;$(ProjectDir)Services\Networking;$(ProjectDir)Services\Logging;$(ProjectDir)Services;$(ProjectDir)DataTypes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

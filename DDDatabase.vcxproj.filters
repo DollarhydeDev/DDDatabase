@@ -7,7 +7,7 @@
     <ClInclude Include="Services\Networking\Server\DDServer.h" />
     <ClInclude Include="Services\Networking\Sockets\ServerSocket\DDServerSocket.h" />
     <ClInclude Include="DataTypes\List\DDList.h" />
-    <ClInclude Include="Core\DatabaseActions\DDQuery.h" />
+    <ClInclude Include="Core\DatabaseActions\DDDatabaseQuery.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

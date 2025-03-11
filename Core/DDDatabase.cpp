@@ -23,5 +23,5 @@ bool DDDatabase::Init()
 void DDDatabase::Run()
 {
 	_logger.LogInfo("Database started");
-	_server.WaitForConnection("8000");
+	_server.WaitForRequest("8002");
 }

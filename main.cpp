@@ -1,6 +1,4 @@
 #include "Core/DDDatabase.h"
-#include "Services/Logging/DDLogger.h"
-#include "Services/Networking/Server/DDServer.h"
 
 int main()
 {

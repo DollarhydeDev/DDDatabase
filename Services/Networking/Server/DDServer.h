@@ -9,6 +9,8 @@
 #include "Logging/DDLogger.h"
 #include "ServerSocket/DDServerSocket.h"
 
+#include "DatabaseActions/DDDatabaseQuery.h"
+
 class DDServer
 {
 	// Members
@@ -24,12 +26,13 @@ public:
 
 	// Private Functions
 private:
+	DDDatabaseQuery ParseRequest(const char* requestData);
+	void SendResponse(SOCKET client);
 
 	// Public functions
 public:
 	static DDServer& GetInstance();
 
 	bool Init();
-	void WaitForConnection(DDString portToListenOn);
+	DDDatabaseQuery WaitForRequest(DDString portToListenOn);
 };
-
